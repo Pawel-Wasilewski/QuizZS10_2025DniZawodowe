@@ -5,13 +5,26 @@ type GameProps = {
     isHardMode: boolean;
 }
 
-export function Game({ isHardMode: ifHardMode }: GameProps) {
+export function Game({ isHardMode }: GameProps) {
     const [count, setCount] = useState<number>(0);
     const [answered, setAnswered] = useState<boolean>(false);
     const [answeredCorrectly, setAnsweredCorrectly] = useState<boolean>(false);
     const [currentEquation, setCurrentEquation] = useState<number>(0);
     const timerRef = useRef<number | null>(null);
 
+    // Reset game when mode changes
+    useEffect(() => {
+        setCount(0);
+        setCurrentEquation(0);
+        setAnswered(false);
+        setAnsweredCorrectly(false);
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+            timerRef.current = null;
+        }
+    }, [isHardMode]);
+
+    // Cleanup timer on unmount
     useEffect(() => {
         return () => {
             if (timerRef.current) {
@@ -35,11 +48,13 @@ export function Game({ isHardMode: ifHardMode }: GameProps) {
         }, 1200);
     }
 
-    if (count < (ifHardMode ? 10 : 5)) {
+    const totalQuestions = isHardMode ? 10 : 5;
+
+    if (count < totalQuestions) {
         return (
             <section>
                 <h1 className="text-center mt-5">
-                    {count} / {ifHardMode ? 10 : 5}
+                    {count} / {totalQuestions}
                 </h1>
                 {answered && (
                     <div className="text-center mt-3">
@@ -52,7 +67,7 @@ export function Game({ isHardMode: ifHardMode }: GameProps) {
                 )}
                 <RenderEquation
                     key={currentEquation}
-                    isHardMode={ifHardMode}
+                    isHardMode={isHardMode}
                     onAnswer={checkAnswer}
                 />
             </section>
@@ -60,7 +75,9 @@ export function Game({ isHardMode: ifHardMode }: GameProps) {
     } else {
         return (
             <section>
-                <h1 className="text-center mt-5">Koniec Gry! {count}</h1>
+                <h1 className="text-center mt-5">
+                    Koniec Gry! Twój wynik: {count}/{totalQuestions}
+                </h1>
             </section>
         );
     }

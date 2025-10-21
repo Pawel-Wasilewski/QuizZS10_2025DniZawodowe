@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route, Link,  useSearchParams} from "react-router-dom";
 import { Game } from "./Game";
 
-function App() {
+export function App() {
     return (
         <Router>
             <Routes>
@@ -13,7 +13,7 @@ function App() {
     );
 }
 
-function Home() {
+export function Home() {
     return (
         <main>
             <h1 className={"text-center mt-5"}> Wybierz poziom </h1>
@@ -49,11 +49,10 @@ function Home() {
     );
 }
 
-function GameRouter(){
-    const { search } = useLocation();
-    const searchParams = new URLSearchParams(search);
-    const mode = searchParams.get("mode") === "hard";
-    return <Game isHardMode={mode} />;
+function GameRouter() {
+    const [searchParams] = useSearchParams();
+    const isHardMode = searchParams.get("mode") === "hard";
+    return <Game isHardMode={isHardMode} />;
 }
 
 export default App;
