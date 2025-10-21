@@ -4,7 +4,7 @@ import { Game } from "./Game";
 
 export function App() {
     return (
-        <Router>
+        <Router basename="/QuizZS10_2025DniZawodowe">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/game" element={<GameRouter />} />
