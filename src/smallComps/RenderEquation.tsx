@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react";
+// TypeScript
+import { useEffect, useState } from "react";
 
 type Equation = {
     addend: bigint;
@@ -22,7 +23,6 @@ export function RenderEquation({ isHardMode, onAnswer, equationValue }: RenderEq
 
     function generateEquation(isHardMode: boolean): Equation {
         if (isHardMode) {
-
             const addend: bigint = BigInt(Math.floor(Math.random() * 9_000_000_000) + 1_000_000_000);
             const addend2: bigint = BigInt(Math.floor(Math.random() * 9_000_000_000) + 1_000_000_000);
             return { addend, addend2, result: addend * addend2 };
@@ -34,13 +34,11 @@ export function RenderEquation({ isHardMode, onAnswer, equationValue }: RenderEq
     }
 
     console.log(`${equation.addend} * ${equation.addend2} = ${equation.result}`);
-    function checkAnswer(): boolean {
-        if (userAnswer === equation.result.toString()) {
-            setUserAnswer("");
-            onAnswer(true);
-        }
+
+    function checkAnswer(): void {
+        const correct = userAnswer === equation.result.toString();
         setUserAnswer("");
-        return false;
+        onAnswer(correct);
     }
 
     return (
@@ -55,6 +53,7 @@ export function RenderEquation({ isHardMode, onAnswer, equationValue }: RenderEq
             <input
                 type="number"
                 className={"bg-body w-100 fs-3 fw-bold text-lg-start"}
+                value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
             />
             <button
