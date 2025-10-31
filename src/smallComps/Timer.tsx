@@ -38,5 +38,10 @@ export function Timer({ timeAssigned, onTimeLeft, onExpire }: TimerProps) {
         [onTimeLeft, onExpire]
     );
 
-    return <span>{ Math.round(timeLeft / 60) } : { timeLeft % 60 }</span>;
+    return(
+        <span>
+            {Math.round(timeLeft / 60)} :{' '}
+            {timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60}
+        </span>
+    )
 }

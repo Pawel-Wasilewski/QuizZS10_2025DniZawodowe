@@ -64,7 +64,7 @@ export function Game({ isHardMode }: GameProps) {
                 <h1 className="text-center mt-5">
                     {count} / {totalQuestions} <br/>
                     podanych: {countAnswered} <br/>
-                    <Timer timeAssigned={ isHardMode ? 300 : 240 } onTimeLeft={setTimeLeft} />
+                    <Timer timeAssigned={ isHardMode ? 420 : 300 } onTimeLeft={setTimeLeft} />
                 </h1>
                 {answered && (
                     <div className="text-center mt-3">
